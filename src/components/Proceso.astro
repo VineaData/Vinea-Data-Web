@@ -1,0 +1,129 @@
+---
+import { pasos } from '../data/site';
+---
+<section class="banda alt" id="proceso">
+  <div>
+    <div class="cabeza rv">
+      <p class="ceja">Cómo trabajamos</p>
+      <h2>Sin sorpresas de <span class="acento">precio ni de plazo</span></h2>
+    </div>
+    <div class="proceso">
+      <ol class="pasos" id="pasos">
+        <li class="relleno" id="relleno" aria-hidden="true"></li>
+        {pasos.map((p, i) => (
+          <li class="paso">
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <div><h3>{p.titulo}</h3><p>{p.texto}</p></div>
+          </li>
+        ))}
+      </ol>
+      <div class="sim" id="sim">
+        <div class="tit"><span>Simulación de plazo</span><span>Ejemplo ilustrativo</span></div>
+        <h3>Plataforma de socios</h3>
+        <p class="sub">2.000 escenarios simulados del mismo proyecto</p>
+        <div class="hist antes" id="hist"></div>
+        <div class="eje"><span id="ejeMin"></span><span>días hábiles</span><span id="ejeMax"></span></div>
+        <div class="filas">
+          <div><span>Lo más probable (P50)</span><b id="v50"></b></div>
+          <div class="total"><span>Plazo comprometido (P80)</span><b id="v80"></b></div>
+        </div>
+        <p class="nota">En 8 de cada 10 escenarios, el proyecto termina antes del plazo comprometido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proceso{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
+  .pasos{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:34px}
+  .pasos::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--linea)}
+  .relleno{position:absolute;left:19px;top:8px;width:2px;height:0;background:var(--uva);transition:height .2s linear}
+  .paso{position:relative;display:flex;gap:22px}
+  .n{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font:500 14px var(--mono);background:var(--tinta);border:2px solid var(--linea);color:var(--texto-2);position:relative;z-index:1;transition:all .4s}
+  .paso.activo .n{border-color:var(--uva);color:var(--texto);background:var(--uva-marca)}
+  .paso h3{margin:6px 0 6px;font-size:21px;font-weight:600}
+  .paso p{margin:0;color:var(--texto-2);line-height:1.6}
+  .sim{background:var(--tinta);border:1px solid var(--linea);border-radius:18px;padding:28px;position:sticky;top:110px;min-width:0}
+  .tit{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:500 12px var(--mono);letter-spacing:1.3px;color:var(--texto-2);text-transform:uppercase}
+  .sim h3{margin:14px 0 4px;font-size:24px;font-weight:600}
+  .sub{margin:0 0 44px;color:var(--texto-2);font-size:15px}
+  .hist{position:relative;height:190px;display:flex;align-items:flex-end;gap:3px;border-bottom:1px solid var(--linea)}
+  .hist :global(i){flex:1;background:var(--gris-punto);border-radius:3px 3px 0 0;transform-origin:bottom;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .hist :global(i.ok){background:#6E5A8C}
+  .hist :global(i.p80){background:var(--uva)}
+  .hist.antes :global(i){transform:scaleY(.25)}
+  .hist :global(.marca-p){position:absolute;top:-6px;bottom:0;width:0;border-left:1px dashed var(--texto-2)}
+  .hist :global(.marca-p span){position:absolute;top:-22px;left:6px;font:500 12px var(--mono);color:var(--texto);white-space:nowrap}
+  .hist :global(.marca-p.p80){border-left:1.5px solid var(--uva)}
+  .hist :global(.marca-p.p80 span){color:var(--uva)}
+  .eje{display:flex;justify-content:space-between;font:500 12px var(--mono);color:var(--texto-2);margin-top:8px}
+  .filas{margin-top:22px;display:flex;flex-direction:column;gap:10px;font:500 14px var(--mono)}
+  .filas div{display:flex;justify-content:space-between;gap:12px;color:var(--texto-2)}
+  .filas b{font-weight:500;color:var(--texto);font-variant-numeric:tabular-nums}
+  .filas .total{border-top:1px solid var(--linea);padding-top:12px;color:var(--texto)}
+  .filas .total b{color:var(--uva)}
+  .nota{margin:16px 0 0;font:400 12px var(--mono);color:var(--texto-2)}
+  @media (max-width:860px){
+    .proceso{grid-template-columns:minmax(0,1fr)}
+    .sim{position:relative;top:0}
+  }
+  @media (prefers-reduced-motion: reduce){ .hist.antes :global(i){transform:none} }
+</style>
+
+<script>
+  // Simulación ilustrativa: suma de 6 tareas con estimación de tres puntos, 2.000 corridas.
+  const tareas = [[2,3,5],[3,4,7],[4,6,10],[2,3,6],[3,5,8],[1,2,4]];
+  const tri = (a: number, m: number, b: number) => {
+    const u = Math.random(), f = (m - a) / (b - a);
+    return u < f ? a + Math.sqrt(u * (b - a) * (m - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - m));
+  };
+  const s: number[] = [];
+  for (let i = 0; i < 2000; i++) s.push(tareas.reduce((t, x) => t + tri(x[0], x[1], x[2]), 0));
+  s.sort((a, b) => a - b);
+  const p50 = s[999], p80 = s[1599], mn = Math.floor(s[0]), mx = Math.ceil(s[1999]);
+  const B = 30, w = (mx - mn) / B, cuentas = new Array(B).fill(0);
+  s.forEach((v) => { cuentas[Math.min(B - 1, Math.floor((v - mn) / w))]++; });
+  const max = Math.max(...cuentas);
+  const hist = document.getElementById('hist')!;
+  cuentas.forEach((c, k) => {
+    const bar = document.createElement('i'), centro = mn + (k + 0.5) * w;
+    bar.style.height = `${(c / max) * 100}%`;
+    bar.style.transitionDelay = `${k * 18}ms`;
+    if (centro <= p50) bar.className = 'ok'; else if (centro <= p80) bar.className = 'p80';
+    hist.appendChild(bar);
+  });
+  const marca = (v: number, txt: string, cls: string) => {
+    const m = document.createElement('div');
+    m.className = `marca-p ${cls}`;
+    m.style.left = `${((v - mn) / (mx - mn)) * 100}%`;
+    const sp = document.createElement('span'); sp.textContent = txt; m.appendChild(sp);
+    hist.appendChild(m);
+  };
+  marca(p50, 'P50', 'p50');
+  marca(p80, 'P80', 'p80');
+  document.getElementById('ejeMin')!.textContent = String(mn);
+  document.getElementById('ejeMax')!.textContent = String(mx);
+  document.getElementById('v50')!.textContent = `${Math.round(p50)} días`;
+  document.getElementById('v80')!.textContent = `${Math.round(p80)} días`;
+
+  const sim = document.getElementById('sim')!;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { hist.classList.remove('antes'); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(sim);
+  } else hist.classList.remove('antes');
+
+  // Línea del proceso que se completa con el scroll
+  const pasosEl = document.getElementById('pasos')!, relleno = document.getElementById('relleno')!;
+  const items = pasosEl.querySelectorAll<HTMLElement>('.paso');
+  const proceso = () => {
+    const r = pasosEl.getBoundingClientRect(), centro = innerHeight * 0.6;
+    const avance = Math.max(0, Math.min(1, (centro - r.top) / r.height));
+    relleno.style.height = `${avance * (r.height - 16)}px`;
+    items.forEach((it) => it.classList.toggle('activo', it.getBoundingClientRect().top + 20 < centro));
+  };
+  addEventListener('scroll', proceso, { passive: true });
+  addEventListener('resize', proceso);
+  proceso();
+</script>

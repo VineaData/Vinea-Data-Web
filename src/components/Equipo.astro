@@ -1,0 +1,61 @@
+---
+import { equipo, principios } from '../data/site';
+---
+<section class="banda alt" id="nosotros">
+  <div>
+    <div class="cabeza rv">
+      <p class="ceja">Quiénes somos</p>
+      <h2>Dos socios de Mendoza. <span class="acento">Hablás con quien lo construye.</span></h2>
+      <p class="lead">Uno piensa el proceso, el otro lo convierte en software. Sin intermediarios ni cuentas que pasan de mano en mano.</p>
+    </div>
+
+    <div class="equipo">
+      {equipo.map((p) => (
+        <article class="persona rv">
+          <div class="top">
+            <div class="foto">
+              {p.foto ? <img src={p.foto} alt={`Foto de ${p.nombre}`} loading="lazy" /> : <span>[foto]</span>}
+            </div>
+            <div><h3>{p.nombre}</h3><span class="rol">{p.rol}</span></div>
+          </div>
+          <p>{p.texto}</p>
+          <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+        </article>
+      ))}
+    </div>
+
+    <div class="principios rv">
+      {principios.map((p) => (
+        <div class="principio"><h3><i></i>{p.titulo}</h3><p>{p.texto}</p></div>
+      ))}
+    </div>
+
+    <div class="nombre rv">
+      <span class="wm" aria-label="vinea data"><b>vinea</b><s></s><em>data</em></span>
+      <p><strong>Vinea</strong> por las raíces y la paciencia del viñedo mendocino: estructura, maduración y cosecha. <strong>Data</strong> por la precisión con la que trabajamos. Nuestro logo es un viñedo visto desde arriba.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .equipo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:64px}
+  .persona{background:var(--tinta);border:1px solid var(--linea);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:18px;min-width:0;transition:border-color .3s}
+  .persona:hover{border-color:var(--linea-hover)}
+  .top{display:flex;gap:18px;align-items:center}
+  .foto{width:76px;height:76px;border-radius:50%;background:var(--tinta-3);border:1px solid var(--linea);flex-shrink:0;display:flex;align-items:center;justify-content:center;font:500 11px var(--mono);color:var(--texto-2);overflow:hidden}
+  .foto img{width:100%;height:100%;object-fit:cover}
+  h3{margin:0 0 4px;font-size:22px;font-weight:600}
+  .rol{font:500 13px var(--mono);color:var(--uva);letter-spacing:.6px}
+  .persona p{margin:0;color:var(--texto-2);line-height:1.6}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tags span{font:500 12px var(--mono);color:var(--texto-2);border:1px solid var(--linea);border-radius:999px;padding:6px 10px;transition:border-color .2s, color .2s}
+  .persona:hover .tags span{border-color:var(--linea-hover);color:var(--texto)}
+  .principios{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;border-top:1px solid var(--linea);padding-top:40px}
+  .principio h3{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:10px}
+  .principio h3 i{width:9px;height:9px;border-radius:50%;background:var(--uva);flex-shrink:0}
+  .principio p{margin:0;color:var(--texto-2);line-height:1.6}
+  .nombre{margin-top:56px;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center;background:var(--tinta);border:1px solid var(--linea);border-radius:18px;padding:32px}
+  .nombre .wm{font-size:40px;letter-spacing:-.03em}
+  .nombre p{margin:0;flex:1 1 360px;min-width:0;color:var(--texto-2);line-height:1.6}
+  .nombre strong{color:var(--texto);font-weight:600}
+</style>

@@ -1,0 +1,38 @@
+---
+import Logo from './Logo.astro';
+---
+<header class="barra" id="barra">
+  <div>
+    <a class="marca" href="#inicio" aria-label="VineaData, inicio">
+      <Logo />
+      <span class="wm"><b>vinea</b><s></s><em>data</em></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a class="link" href="#servicios">Servicios</a>
+      <a class="link" href="#proceso">Cómo trabajamos</a>
+      <a class="link" href="#casos">Casos</a>
+      <a class="link" href="#nosotros">Quiénes somos</a>
+      <a class="btn btn-1 btn-chico" href="#contacto">Pedí tu presupuesto</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .barra{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;padding-block:16px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);transition:background .3s, border-color .3s, padding .3s;border-bottom:1px solid transparent}
+  .barra.solida{background:rgba(27,22,34,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--linea);padding-block:10px}
+  .barra > div{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .marca{display:flex;align-items:center;gap:12px;font-size:22px;letter-spacing:-.5px;color:var(--texto);text-decoration:none}
+  .nav{display:flex;align-items:center;gap:28px}
+  .link{color:var(--texto-2);text-decoration:none;font-weight:500;font-size:15px;padding:12px 0;position:relative}
+  .link::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:1px;background:var(--uva);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+  .link:hover{color:var(--texto)}
+  .link:hover::after{transform:scaleX(1)}
+  @media (max-width:760px){ .link{display:none} }
+</style>
+
+<script>
+  const barra = document.getElementById('barra')!;
+  const estado = () => barra.classList.toggle('solida', scrollY > 40);
+  addEventListener('scroll', estado, { passive: true });
+  estado();
+</script>

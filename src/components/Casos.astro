@@ -1,0 +1,50 @@
+---
+import { casos } from '../data/site';
+---
+<section class="banda" id="casos">
+  <div>
+    <div class="cabeza rv">
+      <p class="ceja">Casos</p>
+      <h2>Ya funcionando <span class="acento">en Mendoza</span></h2>
+    </div>
+    <div class="casos">
+      {casos.map((c) => {
+        const Tag = c.url ? 'a' : 'article';
+        return (
+          <Tag class="caso rv" href={c.url || undefined} target={c.url ? '_blank' : undefined} rel={c.url ? 'noopener' : undefined}>
+            <div class="img">
+              {c.imagen
+                ? <img src={c.imagen} alt={`Captura del proyecto ${c.nombre}`} loading="lazy" />
+                : <span>[Captura de {c.nombre}]</span>}
+            </div>
+            <div class="info">
+              <span class="tag">{c.tag}</span>
+              <h3>{c.nombre}
+                {c.url && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>}
+              </h3>
+              <p>{c.texto}</p>
+            </div>
+          </Tag>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .casos{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+  .caso{background:var(--tinta-2);border:1px solid var(--linea);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:var(--texto);transition:border-color .3s, transform .3s}
+  .caso:hover{border-color:var(--linea-hover);transform:translateY(-4px)}
+  .img{height:250px;background:var(--tinta-3);display:flex;align-items:center;justify-content:center;font:500 13px var(--mono);color:var(--texto-2);position:relative;overflow:hidden}
+  .img img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1;transition:transform .6s}
+  .caso:hover .img img{transform:scale(1.04)}
+  .img::after{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--gris-punto) 2px, transparent 2.5px);background-size:22px 22px;opacity:.6;transition:transform 6s linear}
+  .caso:hover .img::after{transform:translate(22px,22px)}
+  .img span{position:relative;z-index:1}
+  .info{padding:26px 28px;display:flex;flex-direction:column;gap:10px}
+  .tag{font:500 12px var(--mono);letter-spacing:1.2px;color:var(--uva);text-transform:uppercase}
+  h3{margin:0;font-size:26px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  h3 svg{width:22px;height:22px;transition:transform .3s;flex-shrink:0}
+  .caso:hover h3 svg{transform:translate(3px,-3px)}
+  p{margin:0;color:var(--texto-2);line-height:1.55}
+</style>

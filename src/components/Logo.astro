@@ -1,0 +1,7 @@
+---
+// Grilla 5x3 del logo: U = uva, B = bruma, O = brasa
+const celdas = ['U','B','B','B','U','B','U','B','U','B','B','B','O','B','B'];
+---
+<span class="puntos" aria-hidden="true">
+  {celdas.map((c) => <i class={c === 'U' ? 'u' : c === 'O' ? 'o' : undefined}></i>)}
+</span>

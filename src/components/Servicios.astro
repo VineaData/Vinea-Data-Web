@@ -1,0 +1,61 @@
+---
+import { servicios } from '../data/site';
+---
+<section class="banda" id="servicios">
+  <div>
+    <div class="cabeza rv">
+      <p class="ceja">Servicios</p>
+      <h2>Primero ordenamos el proceso. <span class="acento">Después lo automatizamos.</span></h2>
+      <p class="lead">Automatizar un proceso desordenado solo hace más rápido el desorden. Por eso arrancamos por entender cómo trabajás.</p>
+    </div>
+    <div class="servicios">
+      {servicios.map((s) => (
+        <article class="servicio rv" data-patron={s.patron.join(',')}>
+          <div class="mini" aria-hidden="true">
+            {Array.from({ length: 15 }).map((_, i) => (
+              <i class={i === s.patron[s.patron.length - 1] ? 'o' : undefined}></i>
+            ))}
+          </div>
+          <h3>{s.titulo}</h3>
+          <p>{s.texto}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .servicio{position:relative;background:var(--tinta-2);border:1px solid var(--linea);border-radius:18px;padding:30px 28px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow:hidden;transition:border-color .3s, transform .3s}
+  .servicio::before{content:"";position:absolute;inset:0;background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%), rgba(180,138,240,.14), transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+  .servicio:hover{border-color:var(--linea-hover);transform:translateY(-4px)}
+  .servicio:hover::before{opacity:1}
+  .mini{display:grid;grid-template-columns:repeat(5,10px);gap:7px;margin-bottom:8px}
+  .mini i{width:10px;height:10px;border-radius:50%;background:var(--gris-punto);transition:background .25s, transform .25s}
+  .mini i.on{background:var(--uva);transform:scale(1.15)}
+  .mini i.on.o{background:var(--brasa)}
+  h3{margin:0;font-size:21px;font-weight:600;line-height:1.25}
+  p{margin:0;color:var(--texto-2);line-height:1.55}
+  .cabeza p.lead{margin-top:18px}
+</style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('.servicio').forEach((card) => {
+    const dots = Array.from(card.querySelectorAll<HTMLElement>('.mini i'));
+    const patron = (card.dataset.patron || '').split(',').map(Number);
+    let timers: number[] = [];
+    card.addEventListener('mouseenter', () => {
+      patron.forEach((ix, k) => timers.push(window.setTimeout(() => dots[ix]?.classList.add('on'), reduce ? 0 : k * 70)));
+    });
+    card.addEventListener('mouseleave', () => {
+      timers.forEach(clearTimeout); timers = [];
+      dots.forEach((d) => d.classList.remove('on'));
+    });
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+</script>

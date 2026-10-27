@@ -1,0 +1,48 @@
+---
+import { contacto, whatsappUrl } from '../data/site';
+---
+<section class="banda contacto-banda" id="contacto">
+  <div class="contacto rv">
+    <p class="ceja">Contacto</p>
+    <h2>Contanos qué te está <span class="acento">frenando</span></h2>
+    <p class="lead">Una charla de 30 minutos, sin compromiso. Te decimos si podemos ayudarte y cuánto costaría.</p>
+    <div class="acciones">
+      <a class="btn btn-1" href={whatsappUrl} target="_blank" rel="noopener">Escribinos por WhatsApp
+        <svg class="flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="mail">
+      <a href={`mailto:${contacto.email}`} id="mailTxt">{contacto.email}</a>
+      <button type="button" id="copiar">Copiar mail</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacto-banda{overflow:hidden}
+  .contacto-banda::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--gris-punto) 2px, transparent 2.6px);background-size:30px 30px;animation:deriva 40s linear infinite;opacity:.55;-webkit-mask-image:radial-gradient(ellipse at center, #000 10%, transparent 70%);mask-image:radial-gradient(ellipse at center, #000 10%, transparent 70%)}
+  @keyframes deriva{to{background-position:300px 300px}}
+  .contacto{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px}
+  .contacto .ceja{justify-content:center}
+  .contacto .lead{margin:0 auto}
+  .contacto .acciones{justify-content:center;margin-top:8px}
+  .mail{display:inline-flex;align-items:center;gap:12px;font:500 15px var(--mono);flex-wrap:wrap;justify-content:center}
+  .mail a{color:var(--texto-2);text-decoration:none}
+  .mail a:hover{color:var(--texto)}
+  .mail button{font:500 13px var(--mono);color:var(--texto);background:transparent;border:1px solid var(--linea);border-radius:8px;height:36px;padding:0 12px;cursor:pointer}
+  .mail button:hover{border-color:var(--texto-2)}
+</style>
+
+<script>
+  const btn = document.getElementById('copiar')!;
+  const txt = document.getElementById('mailTxt')!;
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(txt.textContent || '');
+      btn.textContent = 'Copiado';
+      setTimeout(() => (btn.textContent = 'Copiar mail'), 1800);
+    } catch {
+      const r = document.createRange(); r.selectNodeContents(txt);
+      const s = getSelection(); s?.removeAllRanges(); s?.addRange(r);
+    }
+  });
+</script>

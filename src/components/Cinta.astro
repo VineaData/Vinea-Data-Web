@@ -1,0 +1,22 @@
+---
+const items = ['Landing pages', 'Webs con suscripciones', 'Paneles de operaciones', 'Automatizaciones', 'Bots de WhatsApp', 'Integraciones'];
+---
+<div class="cinta" aria-hidden="true">
+  <div class="pista-c">
+    {[0, 1].map(() => (
+      <span>
+        {items.map((it, i) => (<>{it} <i class={i === 2 ? 'o' : undefined}></i> </>))}
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .cinta{position:relative;z-index:4;background:var(--uva-marca);overflow:hidden;padding-block:18px;border-block:1px solid var(--uva-hover)}
+  .pista-c{display:flex;width:max-content;animation:corre 38s linear infinite}
+  .cinta:hover .pista-c{animation-play-state:paused}
+  span{font:500 15px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:#FFFFFF;display:flex;align-items:center;gap:28px;padding-right:28px;white-space:nowrap}
+  i{width:7px;height:7px;border-radius:50%;background:#FFFFFF;opacity:.55}
+  i.o{background:var(--brasa);opacity:1}
+  @keyframes corre{to{transform:translateX(-50%)}}
+</style>
