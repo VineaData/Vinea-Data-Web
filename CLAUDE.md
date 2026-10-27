@@ -20,6 +20,25 @@ Tono: rioplatense, con voseo, directo, sin jerga técnica para el cliente. Habla
 - Tipografías: Space Grotesk (todo) e IBM Plex Mono (etiquetas, datos). Nada más.
 - Sin emojis, sin gradientes decorativos, sin sombras salvo el botón de WhatsApp.
 
+### Manual de marca (vive fuera del repo)
+`C:\VineaData\Marca  y branding\` — ojo, **dos espacios** en "Marca  y branding".
+- `Logo · Construcción y tamaños@1x.png` — módulo, resguardo, tamaños mínimos.
+- `Logo · Versiones@1x.png` — las versiones oficiales, con el **texto ya convertido a trazos**.
+
+**Antes de dibujar cualquier pieza con el logo, abrir esos dos archivos.** Ya existe arte oficial: no
+redibujar el wordmark a mano ni reconstruirlo desde la fuente.
+
+- **Módulo:** todo sale del diámetro del punto (D). Los puntos van a 1,5 D de centro a centro.
+- **Resguardo:** 1,5 D libres alrededor del logo. Nada se mete ahí, tampoco una grilla de fondo decorativa.
+- **Alineación:** el alto del isotipo es igual al alto de la "d" del wordmark, con las bases coincidentes.
+- **Un naranja por elemento:** el isotipo lleva 1 y el separador de "vinea·data" lleva 1. En el lockup
+  completo hay 2 y está bien; el "nunca dos" del manual es dentro del isotipo.
+- **Nunca:** estirar, rotar, cambiar colores, agregar sombras, ni usar la grilla completa por debajo de 32 px.
+- **Tamaños del lockup:** 110 px mínimo · 170 px firma de mail · 260 px header web.
+- **Versiones:** Principal horizontal · **Negativo (fondos oscuros, slides, redes)** · Apilado ·
+  Isotipo solo · Avatar circular · Favicon (solo la V, sin grilla) · Monocromo · Monocromo blanco.
+  Para cualquier pieza sobre fondo Tinta la versión correcta es **Negativo**.
+
 ## Verificación
 Comando que el builder y el revisor corren antes de dar algo por terminado:
 
