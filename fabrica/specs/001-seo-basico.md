@@ -50,3 +50,47 @@ PR con revisión del agente (SEO, datos en `site.ts`, imágenes en `public/`) **
 
 ## Preguntas abiertas
 Ninguna.
+
+---
+
+## Enmienda 1 — 2026-10-27 (aprobada por Ema)
+
+**Motivo:** apareció el manual de marca, que vive **fuera del repo** en `C:\VineaData\Marca  y branding\`
+(`Logo · Construcción y tamaños@1x.png` y `Logo · Versiones@1x.png`) y que el `CLAUDE.md` no referenciaba.
+La primera versión de `og.svg` lo contradice en tres puntos y el CA6 original, tal como estaba escrito,
+premiaba la versión equivocada.
+
+### Qué dice el manual y no sabíamos
+- Existe una versión oficial **"Negativo — fondos oscuros, slides, redes"**: isotipo + wordmark sobre Tinta.
+  Es exactamente la pieza que pide este issue.
+- **Resguardo:** 1,5 D libres alrededor del logo (D = diámetro del punto). *Nada* se mete ahí, incluidas
+  grillas de fondo decorativas.
+- **Alineación:** el alto del isotipo es igual al alto de la "d" del wordmark, con las bases coincidentes.
+- **Un punto naranja por elemento:** el isotipo lleva 1 y el separador de "vinea·data" lleva 1. En el lockup
+  completo hay **2 naranjas**, y eso es correcto. El "nunca dos" del manual se refiere a dentro del isotipo.
+- Prohibido: estirar, rotar, cambiar colores, agregar sombras.
+
+### Cambios al alcance
+- `public/og.svg` y `public/og.png` se **rehacen** con el lockup completo (isotipo + wordmark), respetando
+  resguardo y alineación. La frase y el fondo Tinta se mantienen.
+- `CLAUDE.md`: se agrega un puntero a la carpeta del manual y las reglas de arriba, para que ningún agente
+  vuelva a redibujar el logo a mano.
+- **No se tocan** `sitemap.xml.ts`, `robots.txt.ts`, `Base.astro` ni `site.ts`: ya están aprobados.
+
+### CA6 — REEMPLAZADO
+> ~~CA6 original: `grep -o "#FF8A3D" public/og.svg | wc -l` devuelve `1`.~~
+> Queda anulado: exigía un solo naranja y el lockup correcto tiene dos.
+
+- [ ] **CA6-bis:** en `public/og.svg`, `grep -o "#FF8A3D" public/og.svg | wc -l` devuelve exactamente `2`:
+  uno en el punto del isotipo y uno en el separador del wordmark. La paleta sigue cerrada a
+  `#1B1622`, `#3A3541`, `#B48AF0`, `#F4F1F8`, `#FF8A3D`. La frase aparece textualmente una vez.
+
+### Criterios nuevos
+- [ ] **CA7:** el isotipo está presente como marca discreta, replicando la grilla 5×3 de
+  `src/components/Logo.astro` (celdas `U,B,B,B,U,B,U,B,U,B,B,B,O,B,B`), a la izquierda del wordmark,
+  con el alto igual al de la "d" y las bases alineadas.
+- [ ] **CA8:** se respeta el resguardo: ningún punto de la grilla de fondo invade la caja del logo
+  (lockup completo) más 1,5 D en los cuatro lados. Verificable a ojo sobre `dist/og.png` y en el SVG
+  comprobando que no hay `circle` de fondo dentro de esa zona.
+- [ ] **CA9:** `CLAUDE.md` contiene la ruta de la carpeta del manual de marca y las reglas de resguardo,
+  módulo y versiones oficiales.

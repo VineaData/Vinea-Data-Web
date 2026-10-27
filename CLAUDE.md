@@ -20,6 +20,13 @@ Tono: rioplatense, con voseo, directo, sin jerga técnica para el cliente. Habla
 - Tipografías: Space Grotesk (todo) e IBM Plex Mono (etiquetas, datos). Nada más.
 - Sin emojis, sin gradientes decorativos, sin sombras salvo el botón de WhatsApp.
 
+## Verificación
+Comando que el builder y el revisor corren antes de dar algo por terminado:
+
+```
+npm run build
+```
+
 ## Reglas de calidad
 - `npm run build` tiene que pasar sin errores.
 - Todo funciona a 390px de ancho, sin scroll horizontal.
@@ -34,6 +41,7 @@ Tono: rioplatense, con voseo, directo, sin jerga técnica para el cliente. Habla
 - Nunca se pushea directo a `main`.
 
 ## Dónde está cada cosa
+- Agentes y comando `/fabrica`: viven en el vault (`vineadata-vault/.claude/`). Abrir Claude Code con `--add-dir` apuntando al vault.
 - Pedidos pendientes: `fabrica/issues/`
 - Specs aprobadas: `fabrica/specs/`
 - Registro de medición: `fabrica/registro.csv`
