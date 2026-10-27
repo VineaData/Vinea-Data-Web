@@ -1,1 +1,2 @@
 issue,fecha,vueltas_revision,minutos_humanos,costo_usd_aprox,resultado,notas
+001,2026-10-27,0,3,,aprobado,"PR pendiente de abrir a mano: gh CLI no instalado. Rama pusheada. Falta OK de Nico."
