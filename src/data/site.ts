@@ -12,6 +12,18 @@ export const contacto = {
 
 export const whatsappUrl = `https://wa.me/${contacto.whatsapp}?text=${encodeURIComponent(contacto.mensajeWhatsapp)}`;
 
+export const seo = {
+  tituloDefault: 'VineaData · Software y automatización en Mendoza',
+  descripcionDefault: 'Ordenamos tus procesos y los convertimos en software que trabaja por vos. Presupuestado con datos, entregado en semanas.',
+  siteName: 'VineaData',
+  ogImagen: '/og.png',
+  ogAlt: 'VineaData · Innovación concreta para empresas de Mendoza',
+  frasePreview: 'Innovación concreta para empresas de Mendoza',
+};
+
+// Rutas publicadas, usadas para generar el sitemap.
+export const rutas = ['/'];
+
 export const servicios = [
   {
     titulo: 'Landing pages de alta conversión',

@@ -1,15 +1,17 @@
 ---
 import '../styles/global.css';
+import { seo } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
 }
 const {
-  title = 'VineaData · Software y automatización en Mendoza',
-  description = 'Ordenamos tus procesos y los convertimos en software que trabaja por vos. Presupuestado con datos, entregado en semanas.',
+  title = seo.tituloDefault,
+  description = seo.descripcionDefault,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImagen = new URL(seo.ogImagen, Astro.site);
 ---
 <!doctype html>
 <html lang="es">
@@ -22,10 +24,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#1B1622" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={seo.siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content={ogImagen} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={seo.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImagen} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
